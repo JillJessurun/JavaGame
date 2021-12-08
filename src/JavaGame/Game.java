@@ -1,4 +1,4 @@
-//tutorial 7 is de volgende
+//10
 package JavaGame;
 
 import java.awt.*;
@@ -19,6 +19,7 @@ public class Game extends Canvas implements Runnable{
 
     public enum STATE {
         Menu,
+        Options,
         Game
     }
 
@@ -26,20 +27,20 @@ public class Game extends Canvas implements Runnable{
 
     public Game(){
         handler = new Handler();
+        menu = new Menu(this, handler);
         this.addKeyListener(new KeyInput(handler));
+        this.addMouseListener(menu);
 
         new Window(WIDTH,HEIGHT,"Sill's game", this);
 
+        hud = new HUD(handler);
+        spawner = new Spawner(handler, hud, this);
         r = new Random();
-        menu = new Menu();
 
         if (gameState == STATE.Game){
-            hud = new HUD(handler);
-            spawner = new Spawner(handler, hud);
             handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player, handler));
             handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
         }
-
     }
 
     public synchronized void start(){
@@ -95,7 +96,7 @@ public class Game extends Canvas implements Runnable{
         if (gameState == STATE.Game){
             hud.tick();
             spawner.tick();
-        }else if(gameState == STATE.Game){
+        }else if(gameState == STATE.Menu){
             menu.tick();
         }
     }
@@ -115,7 +116,7 @@ public class Game extends Canvas implements Runnable{
         if (gameState == STATE.Game){
             handler.render(g);
             hud.render(g);
-        }else if(gameState == STATE.Menu){
+        }else if(gameState == STATE.Menu || gameState == STATE.Options){
             menu.render(g);
         }
 

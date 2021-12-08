@@ -8,10 +8,12 @@ public class Spawner {
     private HUD hud;
     private Random r = new Random();
     private int scoreKeep = 0;
+    private Game game;
 
-    public Spawner(Handler handler, HUD hud) {
+    public Spawner(Handler handler, HUD hud, Game game) {
         this.handler = handler;
         this.hud = hud;
+        this.game = game;
     }
 
     public void tick() {
@@ -41,8 +43,9 @@ public class Spawner {
                     hud.setScore(0);
                     hud.setLevel(1);
                     hud.setHEALTH(100);
-                    handler.addObject(new Player(Game.WIDTH / 2 - 32, Game.HEIGHT / 2 - 32, ID.Player, handler));
-                    handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, handler));
+                    //handler.addObject(new Player(Game.WIDTH / 2 - 32, Game.HEIGHT / 2 - 32, ID.Player, handler));
+                    //handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, handler));
+                    game.gameState = Game.STATE.Menu;
                 }
             }
         }
