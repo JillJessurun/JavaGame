@@ -16,10 +16,14 @@ public class Game extends Canvas implements Runnable{
     private HUD hud;
     private Spawner spawner;
     private Menu menu;
+    private String difficulty = "easy";
 
+    //pages menu screen
     public enum STATE {
         Menu,
         Options,
+        Difficulty,
+        Help,
         Game
     }
 
@@ -27,7 +31,7 @@ public class Game extends Canvas implements Runnable{
 
     public Game(){
         handler = new Handler();
-        menu = new Menu(this, handler);
+        menu = new Menu(this, handler, difficulty);
         this.addKeyListener(new KeyInput(handler));
         this.addMouseListener(menu);
 
@@ -116,7 +120,7 @@ public class Game extends Canvas implements Runnable{
         if (gameState == STATE.Game){
             handler.render(g);
             hud.render(g);
-        }else if(gameState == STATE.Menu || gameState == STATE.Options){
+        }else if(gameState == STATE.Menu || gameState == STATE.Options || gameState == STATE.Difficulty || gameState == STATE.Help){
             menu.render(g);
         }
 
