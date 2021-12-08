@@ -1,4 +1,8 @@
-//10
+/*
+ideas:
+- when an enemy spawns, let it sit there for like a second so they cant spawn in you and hurt you
+- fix the smart enemy
+ */
 package JavaGame;
 
 import java.awt.*;
@@ -41,10 +45,10 @@ public class Game extends Canvas implements Runnable{
         spawner = new Spawner(handler, hud, this);
         r = new Random();
 
-        if (gameState == STATE.Game){
-            handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player, handler));
-            handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
+        for (int i = 0; i < 15; i++) {
+            handler.addObject(new MenuEffect(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.MenuEffect, handler));
         }
+
     }
 
     public synchronized void start(){
@@ -122,6 +126,7 @@ public class Game extends Canvas implements Runnable{
             hud.render(g);
         }else if(gameState == STATE.Menu || gameState == STATE.Options || gameState == STATE.Difficulty || gameState == STATE.Help){
             menu.render(g);
+            handler.render(g);
         }
 
         g.dispose();

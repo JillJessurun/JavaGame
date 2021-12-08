@@ -23,7 +23,6 @@ public class Spawner {
             scoreKeep = 0;
             hud.setLevel((int) (hud.getLevel() + 1));
 
-            //handler.addObject(new Boss1Enemy((Game.WIDTH/2) -48, -64, ID.Boss1Enemy, handler));
             if (!handler.object.isEmpty()) {
                 if (hud.getLevel() < 5) {
                     handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, handler));
@@ -43,8 +42,9 @@ public class Spawner {
                     hud.setScore(0);
                     hud.setLevel(1);
                     hud.setHEALTH(100);
-                    //handler.addObject(new Player(Game.WIDTH / 2 - 32, Game.HEIGHT / 2 - 32, ID.Player, handler));
-                    //handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, handler));
+                    for (int i = 0; i < 15; i++) {
+                        handler.addObject(new MenuEffect(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.MenuEffect, handler));
+                    }
                     game.gameState = Game.STATE.Menu;
                 }
             }
