@@ -7,11 +7,11 @@ public class HUD {
     private int greenValue = 255;
     private boolean yellow = false;
     private boolean red = false;
-    private float score = 0;
+    private int score = 0;
     private int level = 1;
     private Handler handler;
 
-    public HUD (Handler handler){
+    public HUD (Handler handler) {
         this.handler = handler;
     }
 
@@ -30,7 +30,10 @@ public class HUD {
                 handler.object.remove();
             }
         }
-        score++;
+        if (HEALTH > 0){
+            score++;
+        }
+
     }
 
     public void render(Graphics g){
@@ -55,7 +58,7 @@ public class HUD {
         this.score = score;
     }
 
-    public float getScore() {
+    public int getScore() {
         return score;
     }
 

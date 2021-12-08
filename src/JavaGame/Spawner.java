@@ -39,13 +39,10 @@ public class Spawner {
                 }
 
                 } else {
-                    hud.setScore(0);
                     hud.setLevel(1);
                     hud.setHEALTH(100);
-                    for (int i = 0; i < 15; i++) {
-                        handler.addObject(new MenuEffect(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.MenuEffect, handler));
-                    }
-                    game.gameState = Game.STATE.Menu;
+
+                    game.gameState = Game.STATE.GameOver;
                 }
             }
         }

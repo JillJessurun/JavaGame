@@ -2,12 +2,15 @@
 ideas:
 - when an enemy spawns, let it sit there for like a second so they cant spawn in you and hurt you
 - fix the smart enemy
+- save all time high score
  */
 package JavaGame;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.*;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Game extends Canvas implements Runnable{
 
@@ -21,33 +24,39 @@ public class Game extends Canvas implements Runnable{
     private Spawner spawner;
     private Menu menu;
     private String difficulty = "easy";
+    File file = new File("C:\\Users\\pc\\IdeaProjects\\JavaGameJillJessurun\\src\\JavaGame\\Highscore.txt");
+    BufferedReader reader = new BufferedReader(new FileReader(file));
 
     //pages menu screen
     public enum STATE {
         Menu,
         Options,
         Difficulty,
+        GameOver,
         Help,
         Game
     }
 
     public STATE gameState = STATE.Menu;
 
-    public Game(){
+    public Game() throws FileNotFoundException {
         handler = new Handler();
-        menu = new Menu(this, handler, difficulty);
-        this.addKeyListener(new KeyInput(handler));
-        this.addMouseListener(menu);
 
         new Window(WIDTH,HEIGHT,"Sill's game", this);
 
         hud = new HUD(handler);
+        menu = new Menu(this, handler, difficulty, hud, file, reader);
+
+        this.addKeyListener(new KeyInput(handler));
+        this.addMouseListener(menu);
+
         spawner = new Spawner(handler, hud, this);
         r = new Random();
 
         for (int i = 0; i < 15; i++) {
             handler.addObject(new MenuEffect(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.MenuEffect, handler));
         }
+
 
     }
 
@@ -79,11 +88,19 @@ public class Game extends Canvas implements Runnable{
             delta += (now - lastTime) / ns;
             lastTime = now;
             while(delta >= 1){
-                tick();
+                try {
+                    tick();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 delta--;
             }
             if(running){
-                render();
+                try {
+                    render();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             frames++;
             //if (frames>100){
@@ -99,7 +116,7 @@ public class Game extends Canvas implements Runnable{
         stop();
     }
 
-    private void tick(){
+    private void tick() throws IOException {
         handler.tick();
         if (gameState == STATE.Game){
             hud.tick();
@@ -109,7 +126,7 @@ public class Game extends Canvas implements Runnable{
         }
     }
 
-    private void render(){
+    private void render() throws IOException {
         BufferStrategy bs = this.getBufferStrategy();
         if(bs == null){
             this.createBufferStrategy(3);
@@ -124,7 +141,7 @@ public class Game extends Canvas implements Runnable{
         if (gameState == STATE.Game){
             handler.render(g);
             hud.render(g);
-        }else if(gameState == STATE.Menu || gameState == STATE.Options || gameState == STATE.Difficulty || gameState == STATE.Help){
+        }else if(gameState == STATE.Menu || gameState == STATE.Options || gameState == STATE.Difficulty || gameState == STATE.Help || gameState == STATE.GameOver){
             menu.render(g);
             handler.render(g);
         }
@@ -143,7 +160,7 @@ public class Game extends Canvas implements Runnable{
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         Game game = new Game();
     }
 

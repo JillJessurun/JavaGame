@@ -12,8 +12,8 @@ public class MenuEffect extends GameObject{
     public MenuEffect(float x, float y, ID id, Handler handler) {
         super(x, y, id);
         this.handler = handler;
-        velX = r.nextInt(4, 8);
-        velY = r.nextInt(4, 8);
+        velX = r.nextInt(8, 12);
+        velY = r.nextInt(8, 12);
 
         col = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
     }

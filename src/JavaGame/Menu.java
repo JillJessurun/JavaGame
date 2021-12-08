@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
+import java.io.*;
 import java.util.Random;
 
 public class Menu extends MouseAdapter {
@@ -12,11 +13,19 @@ public class Menu extends MouseAdapter {
     private Handler handler;
     private Random r = new Random();
     private String difficulty;
+    private HUD hud;
+    File file;
+    BufferedReader bufferedReader;
+    private boolean appended = false;
+    private boolean newHighscore = true;
 
-    public Menu(Game game, Handler handler, String difficulty){
+    public Menu(Game game, Handler handler, String difficulty, HUD hud, File file, BufferedReader bufferedReader) {
         this.game = game;
         this.handler = handler;
         this.difficulty = difficulty;
+        this.hud = hud;
+        this.file = file;
+        this.bufferedReader = bufferedReader;
     }
 
     public void mousePressed(MouseEvent e){
@@ -43,6 +52,7 @@ public class Menu extends MouseAdapter {
 
         //options button
         if (mouseOver(mx, my, 310, 600, 350, 100) && game.gameState == Game.STATE.Menu){
+            handler.clearEnemies();
             game.gameState = Game.STATE.Options;
         }
 
@@ -53,6 +63,9 @@ public class Menu extends MouseAdapter {
 
         //options back button
         if (mouseOver(mx, my, 310, 770, 350, 100) && game.gameState == Game.STATE.Options){
+            for (int i = 0; i < 15; i++) {
+                handler.addObject(new MenuEffect(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.MenuEffect, handler));
+            }
             game.gameState = Game.STATE.Menu;
         }
 
@@ -83,6 +96,17 @@ public class Menu extends MouseAdapter {
             game.gameState = Game.STATE.Options;
             difficulty = "hard";
         }
+
+        //gameover home button
+        if (mouseOver(mx, my, 310, 770, 350, 100) && game.gameState == Game.STATE.GameOver){
+            for (int i = 0; i < 15; i++) {
+                handler.addObject(new MenuEffect(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.MenuEffect, handler));
+            }
+            newHighscore = true;
+            appended = false;
+            hud.setScore(0);
+            game.gameState = Game.STATE.Menu;
+        }
     }
 
     public void mouseRelease(MouseEvent e){
@@ -101,17 +125,18 @@ public class Menu extends MouseAdapter {
         }
     }
 
-    public void tick(){
+    public void tick() throws IOException {
         BufferStrategy bs = game.getBufferStrategy();
         Graphics g = bs.getDrawGraphics();
         this.render(g);
     }
 
-    public void render(Graphics g){
+    public void render(Graphics g) throws IOException {
         if(game.gameState == Game.STATE.Menu) {
             Font font = new Font("comic sans ms", 1, 90);
             Font font2 = new Font("segoe print", 1, 25);
             Font font3 = new Font("comic sans ms", 1, 15);
+            Font font4 = new Font("simsun", 1, 30);
 
             g.setFont(font);
             g.setColor(Color.magenta);
@@ -119,7 +144,23 @@ public class Menu extends MouseAdapter {
 
             g.setFont(font3);
             g.setColor(Color.pink);
-            g.drawString("~ Made by Jill Jessurun ~", 380, 250);
+            g.drawString("~ Made by Jill Jessurun ~", 388, 255);
+
+            int highScore = 0;
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line = reader.readLine();
+            while (line != null){
+                int score = Integer.parseInt(line.trim());   // parse each line as an int
+                if (score > highScore){
+                    highScore = score;
+                }
+                line = reader.readLine();
+            }
+            reader.close();
+
+            g.setFont(font4);
+            g.setColor(Color.pink);
+            g.drawString("High score: " + highScore, 367, 330);
 
             //button play
             g.setFont(font2);
@@ -229,6 +270,56 @@ public class Menu extends MouseAdapter {
             g.drawRect(320, 770, 350, 100);
             g.setColor(Color.yellow);
             g.drawString("Back", 460, 825);
+        }else if(game.gameState == Game.STATE.GameOver){
+            Font font = new Font("segoe print", 1, 25);
+            Font font2 = new Font("comic sans ms", Font.ITALIC, 80);
+            Font font3 = new Font("comic sans ms", 1, 25);
+            g.setFont(font2);
+            g.setColor(Color.red);
+
+            g.drawString("GAME OVER", 250, 300);
+
+            g.setFont(font3);
+            g.setColor(Color.lightGray);
+            g.drawString("Your final score is: " + hud.getScore(), 340, 460);
+
+            //read file and look if the old highest score is lower than the new one
+            int highScore = hud.getScore();
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line = reader.readLine();
+            while (line != null){
+                int score = Integer.parseInt(line.trim());   // parse each line as an int
+                if (score > highScore){
+                        highScore = score;
+                        newHighscore = false;
+                }
+
+                line = reader.readLine();
+            }
+            reader.close();
+
+            if (!appended && newHighscore) {
+                //append highscore to the file
+                BufferedWriter output = new BufferedWriter(new FileWriter(file, true));
+                output.newLine();
+                output.append("" + highScore);
+                output.close();
+                appended = true;
+            }
+
+            if(hud.getScore() == highScore ) {
+                g.drawString("Congratulations! That is a new high score! ", 240, 500);
+            }else{
+                g.drawString("Unfortunately not a new high score. Try again! ", 210, 500);
+            }
+
+            //button home screen
+            g.setFont(font);
+            g.setColor(Color.white);
+            g.drawRect(310, 770, 350, 100);
+            g.setColor(Color.yellow);
+            g.drawString("Home", 451, 826);
+
         }
 
     }
