@@ -1,7 +1,6 @@
 package JavaGame;
 
 public enum ID {
-
     Player(),
     BasicEnemy(),
     FastEnemy(),

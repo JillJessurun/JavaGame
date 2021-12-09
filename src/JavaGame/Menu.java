@@ -20,12 +20,12 @@ public class Menu extends MouseAdapter {
     private boolean newHighscore = true;
 
     public Menu(Game game, Handler handler, String difficulty, HUD hud, File file, BufferedReader bufferedReader) {
+        this.file = file;
+        this.bufferedReader = bufferedReader;
         this.game = game;
         this.handler = handler;
         this.difficulty = difficulty;
         this.hud = hud;
-        this.file = file;
-        this.bufferedReader = bufferedReader;
     }
 
     public void mousePressed(MouseEvent e){

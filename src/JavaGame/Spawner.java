@@ -36,6 +36,13 @@ public class Spawner {
                 }else if (hud.getLevel() == 25) {
                     handler.clearEnemies();
                     handler.addObject(new Boss1Enemy((Game.WIDTH / 2) - 48, -64, ID.Boss1Enemy, handler));
+                }else if (hud.getLevel() >= 35 && hud.getLevel() < 40){
+                    handler.clearEnemies();
+                    handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.FastEnemy, handler));
+                }else if (hud.getLevel() >= 40 && hud.getLevel() < 45){
+                    handler.addObject(new UltraEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.UltraEnemy, handler));
+                }else if (hud.getLevel() == 45){
+                    handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.SmartEnemy, handler));
                 }
 
                 } else {

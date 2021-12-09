@@ -1,8 +1,15 @@
 /*
-ideas:
+author: Jill Jessurun
+date: 2021
+goal: dodgewave game in which you have to dodge enemies that are trying to kill you :)
+
+improvement ideas:
 - when an enemy spawns, let it sit there for like a second so they cant spawn in you and hurt you
 - fix the smart enemy
-- save all time high score
+- more bosses
+- different worlds page
+
+11
  */
 package JavaGame;
 
