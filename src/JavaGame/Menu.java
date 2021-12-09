@@ -1,8 +1,10 @@
 package JavaGame;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.awt.image.BufferStrategy;
 import java.io.*;
 import java.util.Random;
@@ -33,7 +35,7 @@ public class Menu extends MouseAdapter {
         int my = e.getY();
 
         //play button
-        if (mouseOver(mx, my, 310, 430, 350, 100) && game.gameState == Game.STATE.Menu){
+        if (mouseOver(mx, my, 595, 430, 350, 100) && game.gameState == Game.STATE.Menu){
             game.gameState = Game.STATE.Game;
             handler.clearEnemies();
             handler.addObject(new Player(Game.WIDTH/2-32, Game.HEIGHT/2-32, ID.Player, handler));
@@ -41,65 +43,65 @@ public class Menu extends MouseAdapter {
         }
 
         //quit button
-        if (mouseOver(mx, my, 310, 770, 350, 100) && game.gameState == Game.STATE.Menu){
+        if (mouseOver(mx, my, 595, 770, 350, 100) && game.gameState == Game.STATE.Menu){
             System.exit(0);
         }
 
         //options difficulty button
-        if (mouseOver(mx, my, 310, 600, 350, 100) && game.gameState == Game.STATE.Options){
+        if (mouseOver(mx, my, 595, 600, 350, 100) && game.gameState == Game.STATE.Options){
             game.gameState = Game.STATE.Difficulty;
         }
 
         //options button
-        if (mouseOver(mx, my, 310, 600, 350, 100) && game.gameState == Game.STATE.Menu){
+        if (mouseOver(mx, my, 595, 600, 350, 100) && game.gameState == Game.STATE.Menu){
             handler.clearEnemies();
             game.gameState = Game.STATE.Options;
         }
 
         //options help button
-        if (mouseOver(mx, my, 310, 430, 350, 100) && game.gameState == Game.STATE.Options){
+        if (mouseOver(mx, my, 595, 430, 350, 100) && game.gameState == Game.STATE.Options){
             game.gameState = Game.STATE.Help;
         }
 
         //options back button
-        if (mouseOver(mx, my, 310, 770, 350, 100) && game.gameState == Game.STATE.Options){
-            for (int i = 0; i < 15; i++) {
+        if (mouseOver(mx, my, 595, 770, 350, 100) && game.gameState == Game.STATE.Options){
+            for (int i = 0; i < 50; i++) {
                 handler.addObject(new MenuEffect(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.MenuEffect, handler));
             }
             game.gameState = Game.STATE.Menu;
         }
 
         //help back button
-        if (mouseOver(mx, my, 320, 770, 350, 100) && game.gameState == Game.STATE.Help){
+        if (mouseOver(mx, my, 595, 770, 350, 100) && game.gameState == Game.STATE.Help){
             game.gameState = Game.STATE.Options;
         }
 
         //difficulty back button
-        if (mouseOver(mx, my, 320, 770, 350, 100) && game.gameState == Game.STATE.Difficulty){
+        if (mouseOver(mx, my, 595, 770, 350, 100) && game.gameState == Game.STATE.Difficulty){
             game.gameState = Game.STATE.Options;
         }
 
         //difficulty easy button
-        if (mouseOver(mx, my, 320, 120, 350, 100) && game.gameState == Game.STATE.Difficulty){
+        if (mouseOver(mx, my, 595, 120, 350, 100) && game.gameState == Game.STATE.Difficulty){
             game.gameState = Game.STATE.Options;
             difficulty = "easy";
         }
 
         //difficulty medium button
-        if (mouseOver(mx, my, 320, 300, 350, 100) && game.gameState == Game.STATE.Difficulty){
+        if (mouseOver(mx, my, 595, 300, 350, 100) && game.gameState == Game.STATE.Difficulty){
             game.gameState = Game.STATE.Options;
             difficulty = "medium";
         }
 
         //difficulty hard button
-        if (mouseOver(mx, my, 320, 480, 350, 100) && game.gameState == Game.STATE.Difficulty){
+        if (mouseOver(mx, my, 595, 480, 350, 100) && game.gameState == Game.STATE.Difficulty){
             game.gameState = Game.STATE.Options;
             difficulty = "hard";
         }
 
         //gameover home button
-        if (mouseOver(mx, my, 310, 770, 350, 100) && game.gameState == Game.STATE.GameOver){
-            for (int i = 0; i < 15; i++) {
+        if (mouseOver(mx, my, 595, 770, 350, 100) && game.gameState == Game.STATE.GameOver){
+            for (int i = 0; i < 50; i++) {
                 handler.addObject(new MenuEffect(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.MenuEffect, handler));
             }
             newHighscore = true;
@@ -140,11 +142,11 @@ public class Menu extends MouseAdapter {
 
             g.setFont(font);
             g.setColor(Color.magenta);
-            g.drawString("DODGEWAVE", 200, 210);
+            g.drawString("DODGEWAVE", 470, 210);
 
             g.setFont(font3);
             g.setColor(Color.pink);
-            g.drawString("~ Made by Jill Jessurun ~", 388, 255);
+            g.drawString("~ Made by Jill Jessurun ~", 675, 255);
 
             int highScore = 0;
             BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -160,26 +162,26 @@ public class Menu extends MouseAdapter {
 
             g.setFont(font4);
             g.setColor(Color.pink);
-            g.drawString("High score: " + highScore, 367, 330);
+            g.drawString("High score: " + highScore, 640, 330);
 
             //button play
             g.setFont(font2);
             g.setColor(Color.white);
-            g.drawRect(310, 430, 350, 100);
+            g.drawRect(595, 430, 350, 100);
             g.setColor(Color.yellow);
-            g.drawString("Play", 454, 488);
-
+            g.drawString("Play", 740, 488);
+//285
             //button options
             g.setColor(Color.white);
-            g.drawRect(310, 600, 350, 100);
+            g.drawRect(595, 600, 350, 100);
             g.setColor(Color.yellow);
-            g.drawString("Options", 430, 655);
+            g.drawString("Options", 715, 655);
 
             //button quit
             g.setColor(Color.white);
-            g.drawRect(310, 770, 350, 100);
+            g.drawRect(595, 770, 350, 100);
             g.setColor(Color.yellow);
-            g.drawString("Quit", 451, 826);
+            g.drawString("Quit", 736, 826);
 
         }else if(game.gameState == Game.STATE.Options){
             Font font3 = new Font("comic sans ms", 1, 25);
@@ -188,38 +190,38 @@ public class Menu extends MouseAdapter {
             g.setFont(font);
             g.setColor(Color.lightGray);
 
-            g.drawString("Options", 369, 130);
+            g.drawString("Options", 664, 130);
             //g.drawString("Use the keys   W A S D   to dodge the enemies!", 215, 190);
             g.setFont(font3);
             if(difficulty.equals("medium")) {
                 g.setColor(Color.orange);
-                g.drawString("Current difficulty: " + difficulty, 310, 220);
+                g.drawString("Current difficulty: " + difficulty, 604, 220);
             }else if(difficulty.equals("hard")){
                 g.setColor(Color.red);
-                g.drawString("Current difficulty: " + difficulty, 330, 220);
+                g.drawString("Current difficulty: " + difficulty, 623, 220);
             }else if(difficulty.equals("easy")){
                 g.setColor(Color.green);
-                g.drawString("Current difficulty: " + difficulty, 330, 220);
+                g.drawString("Current difficulty: " + difficulty, 623, 220);
             }
             g.setFont(font2);
 
             //button help
             g.setColor(Color.white);
-            g.drawRect(310, 430, 350, 100);
+            g.drawRect(595, 430, 350, 100);
             g.setColor(Color.yellow);
-            g.drawString("Help", 454, 488);
+            g.drawString("Help", 740, 488);
 
             //button difficulty
             g.setColor(Color.white);
-            g.drawRect(310, 600, 350, 100);
+            g.drawRect(595, 600, 350, 100);
             g.setColor(Color.yellow);
-            g.drawString("Change difficulty", 385, 655);
+            g.drawString("Change difficulty", 665, 655);
 
             //button go back
             g.setColor(Color.white);
-            g.drawRect(310, 770, 350, 100);
+            g.drawRect(595, 770, 350, 100);
             g.setColor(Color.yellow);
-            g.drawString("Home", 451, 826);
+            g.drawString("Home", 736, 826);
 
         }else if(game.gameState == Game.STATE.Difficulty){
             Font font2 = new Font("segoe print", 1, 25);
@@ -228,27 +230,27 @@ public class Menu extends MouseAdapter {
 
             //button EASY
             g.setColor(Color.white);
-            g.drawRect(320, 120, 350, 100);
+            g.drawRect(595, 120, 350, 100);
             g.setColor(Color.yellow);
-            g.drawString("Easy", 459, 180);
+            g.drawString("Easy", 744, 180);
 
             //button MEDIUM
             g.setColor(Color.white);
-            g.drawRect(320, 300, 350, 100);
+            g.drawRect(595, 300, 350, 100);
             g.setColor(Color.yellow);
-            g.drawString("Medium", 447, 358);
+            g.drawString("Medium", 732, 358);
 
             //button HARD
             g.setColor(Color.white);
-            g.drawRect(320, 480, 350, 100);
+            g.drawRect(595, 480, 350, 100);
             g.setColor(Color.yellow);
-            g.drawString("Hard", 459, 538);
+            g.drawString("Hard", 744, 538);
 
             //button go back
             g.setColor(Color.white);
-            g.drawRect(320, 770, 350, 100);
+            g.drawRect(595, 770, 350, 100);
             g.setColor(Color.yellow);
-            g.drawString("Back", 460, 825);
+            g.drawString("Back", 745, 825);
 
         }else if(game.gameState == Game.STATE.Help){
             Font font = new Font("comic sans ms", 1, 25);
@@ -256,20 +258,20 @@ public class Menu extends MouseAdapter {
             g.setFont(font2);
             g.setColor(Color.lightGray);
 
-            g.drawString("Gameplay:", 405, 150);
-            g.drawString("Move the white square (you) and dodge the enemies.", 95, 190);
-            g.drawString("Control keys: ", 388, 270);
-            g.drawString(" W = go up ", 400, 310);
-            g.drawString(" A = go left ", 400, 350);
-            g.drawString(" S = go down ", 400, 390);
-            g.drawString(" D = go right ", 400, 430);
+            g.drawString("Gameplay:", 695, 150);
+            g.drawString("Move the white square (you) and dodge the enemies.", 385, 190);
+            g.drawString("Control keys: ", 678, 270);
+            g.drawString(" W = go up ", 690, 310);
+            g.drawString(" A = go left ", 690, 350);
+            g.drawString(" S = go down ", 690, 390);
+            g.drawString(" D = go right ", 690, 430);
 
             //button go back
             g.setFont(font);
             g.setColor(Color.white);
-            g.drawRect(320, 770, 350, 100);
+            g.drawRect(595, 770, 350, 100);
             g.setColor(Color.yellow);
-            g.drawString("Back", 460, 825);
+            g.drawString("Back", 745, 825);
         }else if(game.gameState == Game.STATE.GameOver){
             Font font = new Font("segoe print", 1, 25);
             Font font2 = new Font("comic sans ms", Font.ITALIC, 80);
@@ -277,11 +279,11 @@ public class Menu extends MouseAdapter {
             g.setFont(font2);
             g.setColor(Color.red);
 
-            g.drawString("GAME OVER", 250, 300);
+            g.drawString("GAME OVER", 535, 300);
 
             g.setFont(font3);
             g.setColor(Color.lightGray);
-            g.drawString("Your final score is: " + hud.getScore(), 340, 460);
+            g.drawString("Your final score is: " + hud.getScore(), 625, 460);
 
             //read file and look if the old highest score is lower than the new one
             int highScore = hud.getScore();
@@ -308,17 +310,17 @@ public class Menu extends MouseAdapter {
             }
 
             if(hud.getScore() == highScore ) {
-                g.drawString("Congratulations! That is a new high score! ", 240, 500);
+                g.drawString("Congratulations! That is a new high score! ", 525, 500);
             }else{
-                g.drawString("Unfortunately not a new high score. Try again! ", 210, 500);
+                g.drawString("Unfortunately not a new high score. Try again! ", 495, 500);
             }
 
             //button home screen
             g.setFont(font);
             g.setColor(Color.white);
-            g.drawRect(310, 770, 350, 100);
+            g.drawRect(595, 770, 350, 100);
             g.setColor(Color.yellow);
-            g.drawString("Home", 451, 826);
+            g.drawString("Home", 736, 826);
 
         }
 

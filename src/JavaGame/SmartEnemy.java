@@ -32,10 +32,10 @@ public class SmartEnemy extends GameObject{
         velX = (float) ((2.0/distance) * diffX);
         velY = (float) ((2.0/distance) * diffY);
 
-        if (y<= 0 || y >= Game.HEIGHT - 32) {
+        if (y<= 0 || y >= Game.HEIGHT - 235) {
             velY *= -1;
         }
-        if (x<= 0 || x >= Game.WIDTH - 32) {
+        if (x<= 0 || x >= Game.WIDTH - 400) {
             velX *= -1;
         }
 

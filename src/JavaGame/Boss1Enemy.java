@@ -18,7 +18,7 @@ public class Boss1Enemy extends GameObject{
     }
 
     public Rectangle getBounds() {
-        return new Rectangle((int)x, (int)y, 64, 64);
+        return new Rectangle((int)x - 200, (int)y - 200, 64, 64);
     }
 
     public void tick() {
@@ -48,7 +48,7 @@ public class Boss1Enemy extends GameObject{
         //if (y<= 0 || y >= Game.HEIGHT - 32) {
             //velY *= -1;
         //}
-        if (x<= 0 || x >= Game.WIDTH - 70) {
+        if (x<= 0 || x >= Game.WIDTH - 400) {
             velX *= -1;
         }
 

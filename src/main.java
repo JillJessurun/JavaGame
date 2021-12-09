@@ -1,62 +1,75 @@
-import java.io.*;
+/*
+comments:
+- Hashmaps do not have an order like arrays do. It is completely random.
+- happy2.size -> returns size (in this case 3)
+- happy2.replace -> first parameter: key you want value replacement of - second parameter: replacement value
+
+ */
+
+import java.util.HashMap;
 
 public class main {
     public static void main(String[] args) {
 
-        File file = new File("C:\\Users\\pc\\IdeaProjects\\JavaGameJillJessurun\\src\\JavaGame\\Highscore.txt");
+        //hashmap tutorial
+        int a = 10;
+        int b = 3;
+        int c = 88;
 
-        // determine the high score
-        float highScore = 600;
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line = reader.readLine();
-            while (line != null)                 // read the score file line by line
-            {
-                try {
-                    int score = Integer.parseInt(line.trim());   // parse each line as an int
-                    if (score > highScore)                       // and keep track of the largest
-                    {
-                        highScore = score;
-                    }
-                } catch (NumberFormatException e1) {
-                    // ignore invalid scores
-                    //System.err.println("ignoring invalid score: " + line);
-                }
-                line = reader.readLine();
-            }
-            reader.close();
+        //EXAMPLE 1 ----------------------------------------------------------------------------------------------------
 
-        } catch (IOException ex) {
-            System.err.println("ERROR reading scores from file");
+        //hashmap raw? you need to give the type of the data stored in the hashmap (in this case Integer)
+        HashMap<String, Integer> happy = new HashMap<String, Integer>();
+
+        happy.put("a", 10);
+        happy.put("b", 3);
+        happy.put("c", 88);
+
+        //print the hashmap
+        System.out.println(happy);
+
+        //get the value of c via the hashmap
+        System.out.println(happy.get("c") + "\n");
+
+        //EXAMPLE 2 ----------------------------------------------------------------------------------------------------
+        HashMap<String, String> happy2 = new HashMap<String, String>();
+        happy2.put("Sill", "dikzak");
+        happy2.put("bobby69", "hoixd");
+        happy2.put("speedy420", "password123");
+
+        //print the hashmap
+        System.out.println(happy2);
+
+        //remove item from hashmap
+        happy2.remove("Sill");
+
+        //print the hashmap
+        System.out.println(happy2);
+
+        //see if the hashmap contains a certain key
+        if (happy2.containsKey("bobby69")){
+            System.out.println("This hashmap contains the username bobby69!");
+        }else{
+            System.out.println("This hashmap does not contain the username bobby69.");
         }
 
-
-        int points = 420420;
-
-        // display the high score
-        if (points > highScore)
-        {
-            System.out.println("You now have the new high score! The previous high score was " + highScore);
-        } else if (points == highScore) {
-            System.out.println("You tied the high score!");
-        } else {
-            System.out.println("The all time high score was " + highScore);
+        if (happy2.containsKey("xdlolyeet")){
+            System.out.println("This hashmap contains the username xdlolyeet!");
+        }else{
+            System.out.println("This hashmap does not contain the username xdlolyeet.");
         }
 
-
-
-
-
-        // append the last score to the end of the file
-        try {
-            BufferedWriter output = new BufferedWriter(new FileWriter(file, true));
-            output.newLine();
-            output.append("" + points);
-            output.close();
-
-        } catch (IOException ex1) {
-            System.out.printf("ERROR writing score to file: %s\n", ex1);
+        //see if the hashmap contains a certain value
+        if (happy2.containsValue("hoixd")){
+            System.out.println("This hashmap contains the value hoixd!");
+        }else{
+            System.out.println("This hashmap does not contain the value hoixd.");
         }
 
+        if (happy2.containsValue("yayyyyyy")){
+            System.out.println("This hashmap contains the value yayyyyyy!");
+        }else{
+            System.out.println("This hashmap does not contain the value yayyyyyy.");
+        }
     }
 }

@@ -1,5 +1,6 @@
 package JavaGame;
 
+import java.awt.*;
 import java.util.Random;
 
 public class Spawner {
@@ -26,12 +27,16 @@ public class Spawner {
             if (!handler.object.isEmpty()) {
                 if (hud.getLevel() < 5) {
                     handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, handler));
+                    handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, handler));
                 } else if (hud.getLevel() < 10) {
+                    handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.FastEnemy, handler));
                     handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.FastEnemy, handler));
                 } else if (hud.getLevel() == 15) {
                     handler.addObject(new UltraEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.UltraEnemy, handler));
+                    handler.addObject(new UltraEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.UltraEnemy, handler));
                 } else if (hud.getLevel() == 20) {
                     handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.SmartEnemy, handler));
+                    handler.addObject(new UltraEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.UltraEnemy, handler));
                     handler.addObject(new UltraEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.UltraEnemy, handler));
                 }else if (hud.getLevel() == 25) {
                     handler.clearEnemies();
@@ -39,7 +44,11 @@ public class Spawner {
                 }else if (hud.getLevel() >= 35 && hud.getLevel() < 40){
                     handler.clearEnemies();
                     handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.FastEnemy, handler));
+                    handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.FastEnemy, handler));
+                    handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.FastEnemy, handler));
                 }else if (hud.getLevel() >= 40 && hud.getLevel() < 45){
+                    handler.addObject(new UltraEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.UltraEnemy, handler));
+                    handler.addObject(new UltraEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.UltraEnemy, handler));
                     handler.addObject(new UltraEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.UltraEnemy, handler));
                 }else if (hud.getLevel() == 45){
                     handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.SmartEnemy, handler));

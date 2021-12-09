@@ -20,6 +20,7 @@ public class Player extends GameObject{
     public void tick() {
         x += velX;
         y += velY;
+
         x = Game.clamp((int)x, 0, Game.WIDTH - 47);
         y = Game.clamp((int)y, 0, Game.HEIGHT - 72);
 
@@ -31,13 +32,11 @@ public class Player extends GameObject{
     private void collision(){
         for (int i = 0; i < handler.object.size(); i++) {
             GameObject tempObject = handler.object.get(i);
-            if (tempObject.getId() == ID.BasicEnemy || tempObject.getId() == ID.FastEnemy || tempObject.getId() == ID.UltraEnemy || tempObject.getId() == ID.SmartEnemy || tempObject.getId() == ID.Boss1Enemy){
+            if (tempObject.getId() == ID.BasicEnemy || tempObject.getId() == ID.FastEnemy
+                    || tempObject.getId() == ID.UltraEnemy || tempObject.getId() == ID.SmartEnemy || tempObject.getId() == ID.Boss1Enemy){
                 if (getBounds().intersects(tempObject.getBounds())){
                     //collision code (under here happens when colliding
                     HUD.HEALTH -= 2;
-                    //if(HUD.HEALTH == 0){
-                        //System.exit(0);
-                    //}
                 }
             }
         }

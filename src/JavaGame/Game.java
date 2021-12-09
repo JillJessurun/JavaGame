@@ -8,11 +8,13 @@ improvement ideas:
 - fix the smart enemy
 - more bosses
 - different worlds page
+- fix that you can go out of screen :/
 
 11
  */
 package JavaGame;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.io.*;
@@ -21,8 +23,8 @@ import java.util.Scanner;
 
 public class Game extends Canvas implements Runnable{
 
-    public static final int WIDTH = 1000;
-    public static final int HEIGHT = 1000;
+    public static final int WIDTH = 1920;
+    public static final int HEIGHT = 1080;
     private Thread thread;
     private boolean running = false;
     private Handler handler;
@@ -60,7 +62,7 @@ public class Game extends Canvas implements Runnable{
         spawner = new Spawner(handler, hud, this);
         r = new Random();
 
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 50; i++) {
             handler.addObject(new MenuEffect(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.MenuEffect, handler));
         }
 

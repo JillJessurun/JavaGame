@@ -20,10 +20,10 @@ public class UltraEnemy extends GameObject{
         x += velX;
         y += velY;
 
-        if (y<= 0 || y >= Game.HEIGHT - 32) {
+        if (y<= 0 || y >= Game.HEIGHT - 235) {
             velY *= -1;
         }
-        if (x<= 0 || x >= Game.WIDTH - 32) {
+        if (x<= 0 || x >= Game.WIDTH - 400) {
             velX *= -1;
         }
 
