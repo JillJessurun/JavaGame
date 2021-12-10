@@ -1,5 +1,7 @@
 package JavaGame;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -22,12 +24,12 @@ public class Menu extends MouseAdapter {
     private boolean newHighscore = true;
 
     public Menu(Game game, Handler handler, String difficulty, HUD hud, File file, BufferedReader bufferedReader) {
+        this.hud = hud;
         this.file = file;
         this.bufferedReader = bufferedReader;
         this.game = game;
         this.handler = handler;
         this.difficulty = difficulty;
-        this.hud = hud;
     }
 
     public void mousePressed(MouseEvent e){
@@ -40,6 +42,11 @@ public class Menu extends MouseAdapter {
             handler.clearEnemies();
             handler.addObject(new Player(Game.WIDTH/2-32, Game.HEIGHT/2-32, ID.Player, handler));
             handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, handler));
+            game.mainAudio.stopMusic();
+
+            Audio techno = new Audio();
+            game.ingameAudio = techno;
+            game.ingameAudio.playMusic("C:\\Users\\pc\\IdeaProjects\\JavaGameJillJessurun\\src\\Audio\\techno.wav");
         }
 
         //quit button
@@ -108,6 +115,12 @@ public class Menu extends MouseAdapter {
             appended = false;
             hud.setScore(0);
             game.gameState = Game.STATE.Menu;
+
+            try {
+                game.mainAudio.startMusic();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 

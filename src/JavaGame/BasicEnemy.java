@@ -2,7 +2,7 @@ package JavaGame;
 
 import java.awt.*;
 
-public class BasicEnemy extends GameObject{
+public class BasicEnemy extends GameObject {
 
     private Handler handler;
 
@@ -14,25 +14,26 @@ public class BasicEnemy extends GameObject{
     }
 
     public Rectangle getBounds() {
-        return new Rectangle((int)x, (int)y, 16, 16);
+        return new Rectangle((int) x, (int) y, 16, 16);
     }
 
     public void tick() {
+
         x += velX;
         y += velY;
 
-        if (y<= 0 || y >= Game.HEIGHT - 235) {
+        if (y <= 0 || y >= Game.HEIGHT - 235) {
             velY *= -1;
         }
-        if (x<= 0 || x >= Game.WIDTH - 400) {
+        if (x <= 0 || x >= Game.WIDTH - 400) {
             velX *= -1;
         }
 
-        handler.addObject(new Trail((int)x, (int)y, ID.Trail, Color.red, 16, 16, 0.06, handler));
+        handler.addObject(new Trail((int) x, (int) y, ID.Trail, Color.red, 16, 16, 0.06, handler));
     }
 
     public void render(Graphics g) {
         g.setColor(Color.red);
-        g.fillRect((int)x, (int)y, 16, 16);
+        g.fillRect((int) x, (int) y, 16, 16);
     }
 }

@@ -17,6 +17,30 @@ public class Spawner {
         this.game = game;
     }
 
+    public void spawn(ID id, int amountOfSpawns){
+        if(id.equals(ID.BasicEnemy)) {
+            for (int i = 0; i < amountOfSpawns; i++) {
+                handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, handler));
+            }
+        }else if(id.equals(ID.FastEnemy)) {
+            for (int i = 0; i < amountOfSpawns; i++) {
+                handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.FastEnemy, handler));
+            }
+        }else if(id.equals(ID.UltraEnemy)) {
+            for (int i = 0; i < amountOfSpawns; i++) {
+                handler.addObject(new UltraEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.UltraEnemy, handler));
+            }
+        }else if(id.equals(ID.SmartEnemy)) {
+            for (int i = 0; i < amountOfSpawns; i++) {
+                handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.SmartEnemy, handler));
+            }
+        }else if(id.equals(ID.SlowEnemy)) {
+            for (int i = 0; i < amountOfSpawns; i++) {
+                handler.addObject(new SlowEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.SlowEnemy, handler));
+            }
+        }
+    }
+
     public void tick() {
         scoreKeep++;
 
@@ -26,38 +50,31 @@ public class Spawner {
 
             if (!handler.object.isEmpty()) {
                 if (hud.getLevel() < 5) {
-                    handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, handler));
-                    handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, handler));
+                    spawn(ID.BasicEnemy, 2);
                 } else if (hud.getLevel() < 10) {
-                    handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.FastEnemy, handler));
-                    handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.FastEnemy, handler));
+                    spawn(ID.FastEnemy, 2);
                 } else if (hud.getLevel() == 15) {
-                    handler.addObject(new UltraEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.UltraEnemy, handler));
-                    handler.addObject(new UltraEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.UltraEnemy, handler));
+                    spawn(ID.UltraEnemy, 2);
                 } else if (hud.getLevel() == 20) {
-                    handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.SmartEnemy, handler));
-                    handler.addObject(new UltraEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.UltraEnemy, handler));
-                    handler.addObject(new UltraEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.UltraEnemy, handler));
+                    spawn(ID.SmartEnemy, 1);
+                    spawn(ID.UltraEnemy, 2);
                 }else if (hud.getLevel() == 25) {
                     handler.clearEnemies();
                     handler.addObject(new Boss1Enemy((Game.WIDTH / 2) - 48, -64, ID.Boss1Enemy, handler));
-                }else if (hud.getLevel() >= 35 && hud.getLevel() < 40){
+                }else if (hud.getLevel() == 35){
                     handler.clearEnemies();
-                    handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.FastEnemy, handler));
-                    handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.FastEnemy, handler));
-                    handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.FastEnemy, handler));
-                }else if (hud.getLevel() >= 40 && hud.getLevel() < 45){
-                    handler.addObject(new UltraEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.UltraEnemy, handler));
-                    handler.addObject(new UltraEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.UltraEnemy, handler));
-                    handler.addObject(new UltraEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.UltraEnemy, handler));
-                }else if (hud.getLevel() == 45){
-                    handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.SmartEnemy, handler));
-                }
+                    spawn(ID.FastEnemy, 3);
+                }else if (hud.getLevel() >= 36 && hud.getLevel() < 40){
+                    spawn(ID.FastEnemy, 3);
+                }else if (hud.getLevel() > 40){
+                    spawn(ID.SlowEnemy, 3);
+                }//level 60 -> new boss :)
 
                 } else {
                     hud.setLevel(1);
                     hud.setHEALTH(100);
 
+                    game.ingameAudio.stopMusic();
                     game.gameState = Game.STATE.GameOver;
                 }
             }

@@ -38,6 +38,8 @@ public class HUD {
 
     public void render(Graphics g){
         g.setColor(Color.gray);
+        Font font2 = new Font("arial", 1, 11);
+        g.setFont(font2);
         g.fillRect(15, 15, 200, 40);
         if(yellow){
             g.setColor(Color.yellow);

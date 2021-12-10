@@ -1,12 +1,18 @@
 package JavaGame;
 
 public enum ID {
+    //players
     Player(),
+
+    //enemies
     BasicEnemy(),
     FastEnemy(),
     SmartEnemy(),
-    Boss1Enemy(),
     UltraEnemy(),
+    SlowEnemy(),
+    Boss1Enemy(),
+
+    //other
     MenuEffect(),
     Trail();
 

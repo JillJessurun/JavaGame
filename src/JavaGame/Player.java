@@ -1,6 +1,7 @@
 package JavaGame;
 
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 import java.util.Random;
 
 public class Player extends GameObject{
@@ -11,6 +12,8 @@ public class Player extends GameObject{
     public Player(int x, int y, ID id, Handler handler) {
         super(x, y, id);
         this.handler = handler;
+
+
     }
 
     public Rectangle getBounds() {
@@ -33,7 +36,8 @@ public class Player extends GameObject{
         for (int i = 0; i < handler.object.size(); i++) {
             GameObject tempObject = handler.object.get(i);
             if (tempObject.getId() == ID.BasicEnemy || tempObject.getId() == ID.FastEnemy
-                    || tempObject.getId() == ID.UltraEnemy || tempObject.getId() == ID.SmartEnemy || tempObject.getId() == ID.Boss1Enemy){
+                  || tempObject.getId() == ID.UltraEnemy || tempObject.getId() == ID.SmartEnemy ||
+                    tempObject.getId() == ID.Boss1Enemy || tempObject.getId() == ID.SlowEnemy){
                 if (getBounds().intersects(tempObject.getBounds())){
                     //collision code (under here happens when colliding
                     HUD.HEALTH -= 2;

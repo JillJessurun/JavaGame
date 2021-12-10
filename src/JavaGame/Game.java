@@ -9,14 +9,16 @@ improvement ideas:
 - more bosses
 - different worlds page
 - fix that you can go out of screen :/
-
-11
+- the scaling is good on every device
+- create a shop with different sprites and upgrades (speed ups, more health, health refills, score multipliers, etc.)
+- create a real program when finished (.exe for example), tutorial: https://www.youtube.com/watch?v=jyl9Anruc34
  */
 package JavaGame;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
@@ -25,6 +27,7 @@ public class Game extends Canvas implements Runnable{
 
     public static final int WIDTH = 1920;
     public static final int HEIGHT = 1080;
+
     private Thread thread;
     private boolean running = false;
     private Handler handler;
@@ -32,7 +35,13 @@ public class Game extends Canvas implements Runnable{
     private HUD hud;
     private Spawner spawner;
     private Menu menu;
+    static Audio mainAudio;
+    Audio ingameAudio;
+    //public static BufferedImage spriteSheet;
+
     private String difficulty = "easy";
+    public static boolean paused = false;
+
     File file = new File("C:\\Users\\pc\\IdeaProjects\\JavaGameJillJessurun\\src\\JavaGame\\Highscore.txt");
     BufferedReader reader = new BufferedReader(new FileReader(file));
 
@@ -48,15 +57,22 @@ public class Game extends Canvas implements Runnable{
 
     public STATE gameState = STATE.Menu;
 
-    public Game() throws FileNotFoundException {
+    private BufferedImage spriteSheet;
+
+    public Game() throws IOException {
+
         handler = new Handler();
+        this.mainAudio = new Audio();
 
         new Window(WIDTH,HEIGHT,"Sill's game", this);
-
-        hud = new HUD(handler);
         menu = new Menu(this, handler, difficulty, hud, file, reader);
+        hud = new HUD(handler);
 
-        this.addKeyListener(new KeyInput(handler));
+        //BufferedImageLoader loader = new BufferedImageLoader();
+        //spriteSheet = loader.loadImage("C:\\Users\\pc\\IdeaProjects\\JavaGameJillJessurun\\src\\Images\\steve.jpg");
+
+        this.addKeyListener(new KeyInput(handler, this));
+
         this.addMouseListener(menu);
 
         spawner = new Spawner(handler, hud, this);
@@ -126,12 +142,14 @@ public class Game extends Canvas implements Runnable{
     }
 
     private void tick() throws IOException {
-        handler.tick();
-        if (gameState == STATE.Game){
-            hud.tick();
-            spawner.tick();
-        }else if(gameState == STATE.Menu){
-            menu.tick();
+        if (!paused){
+            handler.tick();
+            if (gameState == STATE.Game){
+                hud.tick();
+                spawner.tick();
+            }else if(gameState == STATE.Menu){
+                menu.tick();
+            }
         }
     }
 
@@ -144,8 +162,20 @@ public class Game extends Canvas implements Runnable{
 
         Graphics g = bs.getDrawGraphics();
 
+
+
         g.setColor(Color.black);
         g.fillRect(0, 0, WIDTH, HEIGHT);
+
+        if (paused){
+            g.setColor(Color.cyan);
+            Font font = new Font("comic sans ms", 1, 120);
+            Font font2 = new Font("arial", 1, 11);
+            g.setFont(font);
+            g.drawString("PAUSED", 710, 420);
+            g.setFont(font2);
+            g.setColor(Color.white);
+        }
 
         if (gameState == STATE.Game){
             handler.render(g);
@@ -169,8 +199,10 @@ public class Game extends Canvas implements Runnable{
         }
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         Game game = new Game();
+
+        mainAudio.playMusic("C:\\Users\\pc\\IdeaProjects\\JavaGameJillJessurun\\src\\Audio\\synthwave.wav");
     }
 
 }
